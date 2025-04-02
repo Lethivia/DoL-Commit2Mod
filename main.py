@@ -351,10 +351,6 @@ class CommitToMod:
                     "modName": "TweeReplacer",
                     "version": "^1.0.0"
                 },
-                {
-                    "modName": "ReplacePatcher",
-                    "version": ">=1.0.0"
-                }
             ]
         }
         
@@ -366,6 +362,10 @@ class CommitToMod:
                 "modVersion": "^1.0.0",
                 "params": self.replace_patcher_params
             })
+            boot_json["dependenceInfo"].append({
+                    "modName": "ReplacePatcher",
+                    "version": ">=1.0.0"
+                })
         
         # 写入boot.json文件
         with open(self.boot_json_path, "w", encoding="utf-8") as f:
@@ -387,7 +387,7 @@ class CommitToMod:
             for root, dirs, files in os.walk(self.mod_dir):
                 for file in files:
                     file_path = Path(root) / file
-                    rel_path = file_path.relative_to(self.output_dir)
+                    rel_path = file_path.relative_to(self.mod_dir)
                     zipf.write(file_path, rel_path)
         
         print(f"创建zip文件: {zip_path}")
